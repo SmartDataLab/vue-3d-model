@@ -1,7 +1,9 @@
 <template>
   <div class="demo-block">
     <div class="demo-block-preview">
-      <slot name="preview"></slot>
+      <!-- <slot name="preview"></slot> -->
+      <model-gltf :backgroundAlpha="0" @on-load="onLoad" src="static/models/gltf/Duck/glTF/Duck.gltf"></model-gltf>
+      <div class="example-loading" v-show="loading"></div>
     </div>
     <div class="demo-block-code">
       <div class="demo-block-code-box">
@@ -28,6 +30,8 @@
 import 'highlight.js/styles/github.css';
 import hljs from 'highlight.js';
 
+import ModelGltf from '../../src/model-gltf.vue';
+
 /* eslint-disable no-irregular-whitespace */
 
 const codeHandler = (code) => {
@@ -39,6 +43,9 @@ const codeHandler = (code) => {
 
 export default {
   name: 'app',
+  components: {
+    ModelGltf,
+  },
   props: {
     vueCode: String,
     htmlCode: {
@@ -46,19 +53,23 @@ export default {
       default: '// TODO',
     },
   },
+  methods: {
+    onLoad() {
+      this.loading = false;
+    },
+  },
   mounted() {
     hljs.highlightBlock(this.$refs.vueCode);
     hljs.highlightBlock(this.$refs.htmlCode);
   },
   data() {
-    return {};
+    return { loading: true };
   },
   filters: {
     code(val) {
       return codeHandler(val);
     },
   },
-  components: {},
 };
 </script>
 <style>
@@ -104,11 +115,9 @@ export default {
   left: 0;
   width: 90%;
   height: 1px;
-  background: -webkit-linear-gradient(
-    left,
-    #dfe2e7 80%,
-    rgba(223, 226, 231, 0) 100%
-  );
+  background: -webkit-linear-gradient(left,
+      #dfe2e7 80%,
+      rgba(223, 226, 231, 0) 100%);
 }
 
 .demo-block .demo-block-code-box h3 {

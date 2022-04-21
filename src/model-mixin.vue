@@ -3,7 +3,8 @@
     <canvas v-if="suportWebGL" ref="canvas" style="width: 100%; height: 100%;"></canvas>
     <div v-else>
       <slot>
-        Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br/>'
+        Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation"
+          style="color:#000">WebGL</a>.<br />'
       </slot>
     </div>
   </div>
@@ -110,7 +111,7 @@ export default {
       default: 'anonymous',
     },
     requestHeader: {
-      default: () => {},
+      default: () => { },
     },
     outputEncoding: {
       type: Number,
@@ -144,12 +145,13 @@ export default {
     hasListener() {
       // 判断是否有鼠标事件监听，用于减少不必要的拾取判断
       /* eslint-disable no-underscore-dangle */
-      const events = this._events;
+      // const events = this._events;
       const result = {};
-
-      ['on-mousemove', 'on-mouseup', 'on-mousedown', 'on-click'].forEach((name) => {
-        result[name] = !!events[name] && events[name].length > 0;
-      });
+      // 'on-mousemove',
+      // console.log(events);
+      // ['on-mouseup', 'on-mousedown', 'on-click'].forEach((name) => {
+      //   result[name] = !!events[name] && events[name].length > 0;
+      // });
 
       return result;
     },
@@ -187,7 +189,7 @@ export default {
 
     this.animate();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     cancelAnimationFrame(this.reqId);
 
     this.renderer.dispose();
@@ -463,7 +465,7 @@ export default {
       this.updateModel();
     },
     animate() {
-      this.reqId = requestAnimationFrame(this.animate);
+      // this.reqId = requestAnimationFrame(this.animate);
       this.render();
     },
     render() {

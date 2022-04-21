@@ -1,10 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import Vue from 'vue';
-import Router from 'vue-router';
+// import Vue from 'vue';
+// import Router from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import pages from './pages';
 
-Vue.use(Router);
+// Vue.use(Router);
 
 const routes = pages.map((page) => {
   const { name } = page;
@@ -17,8 +18,13 @@ const routes = pages.map((page) => {
 });
 
 routes.push({
-  path: '*',
+  path: '/: pathMatch(.*) *',
   redirect: '/demo-basic',
 });
+// export default new Router({ routes });
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
 
-export default new Router({ routes });
+export default router;

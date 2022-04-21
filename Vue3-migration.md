@@ -568,6 +568,47 @@ vue.runtime.esm-bundler.js?fe26:1528 [Vue warn]: (deprecation OPTIONS_DESTROYED)
     - If you are using vue-router, note <transition> and <keep-alive> will not work with <router-view> until you upgrade to vue-router v4.
 
 
-- upgrade vue-router from v3 to v4(for vue3)
+- upgrade vue-router from v3 to v4(for vue3) [doc](https://router.vuejs.org/guide/migration/index.html#new-history-option-to-replace-mode)
 
+[typo for path "*"](https://router.vuejs.org/guide/migration/#removed-star-or-catch-all-routes)
 
+- fix deprecated api: slot([v3](https://v2.vuejs.org/v2/guide/components-slots.html?redirect=true#Deprecated-Syntax) [v2](https://v2.vuejs.org/v2/guide/components-slots.html))
+
+drop not use slot and replace it with real code for test
+
+- error related with three.js
+
+```
+Uncaught TypeError: 'get' on proxy: property 'modelViewMatrix' is a read-only and non-configurable data property on the proxy target but the proxy did not return its actual value (expected '#<Matrix4>' but got '#<Matrix4>')
+    at renderObject (three.module.js?6573:26587:1)
+    at renderObjects (three.module.js?6573:26575:1)
+    at renderScene (three.module.js?6573:26515:1)
+    at Proxy.WebGLRenderer.render (three.module.js?6573:26327:1)
+    at Proxy.render (model-mixin.vue?796c:470:1)
+    at Proxy.animate (model-mixin.vue?796c:467:1)
+renderObject @ three.module.js?6573:26587
+renderObjects @ three.module.js?6573:26575
+renderScene @ three.module.js?6573:26515
+WebGLRenderer.render @ three.module.js?6573:26327
+render @ model-mixin.vue?796c:470
+animate @ model-mixin.vue?796c:467
+requestAnimationFrame (async)
+animate @ model-mixin.vue?796c:466
+requestAnimationFrame (async)
+```
+
+```
+Uncaught TypeError: Cannot read properties of undefined (reading 'on-mousemove')
+    at eval (model-mixin.vue?796c:152:1)
+    at Array.forEach (<anonymous>)
+    at Proxy.hasListener (model-mixin.vue?796c:151:1)
+    at ReactiveEffect.run (vue.runtime.esm-bundler.js?fe26:527:1)
+    at ComputedRefImpl.get value [as value] (vue.runtime.esm-bundler.js?fe26:1464:1)
+    at Object.get [as hasListener] (vue.runtime.esm-bundler.js?fe26:4938:1)
+    at Object.get (vue.runtime.esm-bundler.js?fe26:10062:1)
+    at Proxy.onMouseMove (model-mixin.vue?796c:276:1)
+```
+
+- solve all the error and find there is still nothing for preview layout
+
+- need to learn about three.js

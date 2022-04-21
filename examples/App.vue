@@ -4,6 +4,8 @@
       <a href="https://github.com/hujiulong/vue-3d-model" class="title">Vue3DModel</a>
       <a href="https://github.com/hujiulong/vue-3d-model" class="github">View on GitHub</a>
     </div>
+
+    <demo-gltf-vue style="height: 1000px"></demo-gltf-vue>
     <div class="examples-content">
       <ul class="examples-menu">
         <li class="examples-menu-title">Examples</li>
@@ -53,7 +55,6 @@
         </li>
       </ul>
       <div class="examples-pages">
-        <demo-gltf-vue></demo-gltf-vue>
         <router-view></router-view>
       </div>
     </div>

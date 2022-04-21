@@ -1,11 +1,7 @@
 <template>
   <demo-block :vue-code="code" :html-code="htmlCode">
     <template slot="preview">
-      <model-gltf
-        :backgroundAlpha="0"
-        @on-load="onLoad"
-        src="static/models/gltf/Duck/glTF/Duck.gltf"
-      ></model-gltf>
+      <model-gltf :backgroundAlpha="0" @on-load="onLoad" src="static/models/gltf/Duck/glTF/Duck.gltf"></model-gltf>
       <div class="example-loading" v-show="loading"></div>
     </template>
   </demo-block>
