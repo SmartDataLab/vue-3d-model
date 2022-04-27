@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+// import { ShallowRef } from 'vue';
 import {
   Object3D,
   Vector2,
@@ -28,7 +28,8 @@ import {
   LinearEncoding,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { getSize, getCenter } from './util';
+// import { getSize, getCenter } from './util';
+import { getSize } from './util';
 
 const suportWebGL = (() => {
   try {
@@ -43,6 +44,7 @@ const DEFAULT_GL_OPTIONS = {
   antialias: true,
   alpha: true,
 };
+// const scene = new Scene();
 
 export default {
   props: {
@@ -132,7 +134,7 @@ export default {
       raycaster: new Raycaster(),
       mouse: new Vector2(),
       camera: new PerspectiveCamera(45, 1, 0.01, 100000),
-      scene: new Scene(),
+      // scene: ShallowRef(null),
       wrapper: new Object3D(),
       renderer: null,
       controls: null,
@@ -157,6 +159,7 @@ export default {
     },
   },
   mounted() {
+    this.scene = new Scene();
     if (this.width === undefined || this.height === undefined) {
       this.size = {
         width: this.$el.offsetWidth,
@@ -175,17 +178,43 @@ export default {
     this.controls = new OrbitControls(this.camera, this.$el);
     this.controls.type = 'orbit';
 
+    this.scene.background = new Color('skyblue');
+
+    console.log(this.wrapper, this.scene);
     this.scene.add(this.wrapper);
+    console.log('done add wrapper');
 
-    this.load();
-    this.update();
+    // this.load();
+    console.log('done load', this.loader, this.src);
+    if (this.object) {
+      this.wrapper.remove(this.object);
+    }
 
-    this.$el.addEventListener('mousedown', this.onMouseDown, false);
-    this.$el.addEventListener('mousemove', this.onMouseMove, false);
-    this.$el.addEventListener('mouseup', this.onMouseUp, false);
-    this.$el.addEventListener('click', this.onClick, false);
+    this.loader.setRequestHeader(this.requestHeader);
+    this.loader.load(this.src, (...args) => {
+      const object = this.getObject(...args);
 
-    window.addEventListener('resize', this.onResize, false);
+      if (this.process) {
+        this.process(object);
+      }
+
+      this.addObject(object.scene);
+
+      this.$emit('on-load');
+    }, (xhr) => {
+      console.log(xhr);
+      this.$emit('on-progress', xhr);
+    }, (err) => {
+      this.$emit('on-error', err);
+    });
+    // this.update();
+
+    // this.$el.addEventListener('mousedown', this.onMouseDown, false);
+    // this.$el.addEventListener('mousemove', this.onMouseMove, false);
+    // this.$el.addEventListener('mouseup', this.onMouseUp, false);
+    // this.$el.addEventListener('click', this.onClick, false);
+
+    // window.addEventListener('resize', this.onResize, false);
 
     this.animate();
   },
@@ -426,6 +455,7 @@ export default {
       }
     },
     load() {
+      console.log('enter load', this.src);
       if (!this.src) return;
 
       if (this.object) {
@@ -444,6 +474,7 @@ export default {
 
         this.$emit('on-load');
       }, (xhr) => {
+        console.log(xhr);
         this.$emit('on-progress', xhr);
       }, (err) => {
         this.$emit('on-error', err);
@@ -453,19 +484,20 @@ export default {
       return object;
     },
     addObject(object) {
-      const center = getCenter(object);
+      // const center = getCenter(object);
 
       // correction position
-      this.wrapper.position.copy(center.negate());
+      // this.wrapper.position.copy(center.negate());
 
       this.object = object;
-      this.wrapper.add(object);
+      // this.wrapper.add(object);
+      this.scene.add(object);
 
-      this.updateCamera();
-      this.updateModel();
+      // this.updateCamera();
+      // this.updateModel();
     },
     animate() {
-      // this.reqId = requestAnimationFrame(this.animate);
+      this.reqId = requestAnimationFrame(this.animate);
       this.render();
     },
     render() {

@@ -1,14 +1,14 @@
 <template>
-  <demo-block :vue-code="code" :html-code="htmlCode">
-    <template slot="preview">
-      <model-gltf :backgroundAlpha="0" @on-load="onLoad" src="static/models/gltf/Duck/glTF/Duck.gltf"></model-gltf>
-      <div class="example-loading" v-show="loading"></div>
-    </template>
-  </demo-block>
+  <!-- <demo-block :vue-code="code" :html-code="htmlCode"> -->
+  <!-- <template slot="preview"> -->
+  <model-gltf :backgroundAlpha="0" @on-load="onLoad" src="static/models/gltf/Duck/glTF/Duck.gltf"></model-gltf>
+  <!-- <div class="example-loading" v-show="loading"></div> -->
+  <!-- </template> -->
+  <!-- </demo-block> -->
 </template>
 
 <script>
-import DemoBlock from '../components/demo-block.vue';
+// import DemoBlock from '../components/demo-block.vue';
 import ModelGltf from '../../src/model-gltf.vue';
 
 const code = `
@@ -62,7 +62,7 @@ export default {
   },
   components: {
     ModelGltf,
-    DemoBlock,
+    // DemoBlock,
   },
 };
 </script>

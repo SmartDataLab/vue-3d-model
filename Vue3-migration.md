@@ -612,3 +612,7 @@ Uncaught TypeError: Cannot read properties of undefined (reading 'on-mousemove')
 - solve all the error and find there is still nothing for preview layout
 
 - need to learn about three.js
+
+- find the vue3 + three.js work method
+  - no data or this for three object
+  - use ref for dom binding https://vuejs.org/api/composition-api-lifecycle.html#onmounted
